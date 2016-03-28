@@ -1,0 +1,56 @@
+# Built application files
+*.apk
+*.ap_
+
+# Files for the Dalvik VM
+*.dex
+
+# Java class files
+*.class
+
+# Log Files
+*.log
+
+# Android generated
+bin
+gen
+libs
+obj
+lint.xml
+
+# IntelliJ IDEA
+.idea
+*.iml
+*.ipr
+*.iws
+classes
+gen-external-apklibs
+
+# Eclipse
+.project
+.classpath
+.settings
+.checkstyle
+.cproject
+
+# Gradle
+.gradle
+build
+out
+
+# Maven
+target
+release.properties
+pom.xml.*
+
+# Ant
+ant.properties
+local.properties
+proguard.cfg
+proguard-project.txt
+
+# Other
+.DS_Store
+dist
+tmp
+/captures
