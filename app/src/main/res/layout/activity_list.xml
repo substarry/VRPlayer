@@ -7,6 +7,16 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="35dp"/>
+
+    <TextView
+        android:id="@+id/tv_play_demo"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:gravity="center"
+        android:text="Play Demo"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/holo_blue_dark"/>
 
 </RelativeLayout>

@@ -25,7 +25,7 @@ public class Splash extends Activity {
         File folder = new File(Environment.getExternalStorageDirectory() + File.separator + "360Videos");
         if (folder.exists()) {
 
-            if (folder.listFiles().length > 0) {
+            if (folder.listFiles() != null && folder.listFiles().length > 0) {
                 Handler h = new Handler();
                 Runnable r = new Runnable() {
                     @Override
@@ -46,6 +46,8 @@ public class Splash extends Activity {
                 ad.setButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         ad.dismiss();
+                        Intent next = new Intent(Splash.this, ListActivity.class);
+                        startActivity(next);
                         finish();
                     }
                 });
@@ -63,6 +65,9 @@ public class Splash extends Activity {
             ad.setButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     ad.dismiss();
+                    Intent next = new Intent(Splash.this, ListActivity.class);
+                    startActivity(next);
+                    finish();
                 }
             });
             ad.show();

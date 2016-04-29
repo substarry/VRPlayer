@@ -47,6 +47,13 @@ public class RajawaliVRRenderer extends RajawaliRenderer implements CardboardVie
     private Matrix4 mLookingAtMatrix;
     private float[] mHeadView;
 
+    protected float mGestureXAngle = 0;
+    protected float mGestureYAngle = 0;
+
+    protected Matrix4 mTmpMatrix;
+    protected Quaternion mTmpOrientation;
+
+
 	public RajawaliVRRenderer(Context context) {
 		super(context);
         mCurrentEyeMatrix = new Matrix4();
@@ -58,6 +65,9 @@ public class RajawaliVRRenderer extends RajawaliRenderer implements CardboardVie
         mCameraPosition = new Vector3();
         mForwardVec = new Vector3();
         mHeadTranslation = new Vector3();
+
+        mTmpMatrix = new Matrix4();
+        mTmpOrientation = new Quaternion();
 	}
 	
 	@Override
@@ -93,7 +103,14 @@ public class RajawaliVRRenderer extends RajawaliRenderer implements CardboardVie
                 eye.getFov().getRight(),
                 eye.getFov().getBottom(),
                 eye.getFov().getTop());
-        mCurrentEyeMatrix.setAll(eye.getEyeView());
+
+        // 左右滑动时camera绕世界坐标的Y轴旋转， 上下滑动时camera绕自身的X轴旋转
+        mCurrentEyeMatrix.identity();
+        mCurrentEyeMatrix.multiply(mTmpMatrix.setAll(mTmpOrientation.fromAngleAxis(Vector3.X, mGestureXAngle)));
+        mCurrentEyeMatrix.multiply(mTmpMatrix.setAll(eye.getEyeView()));
+        mCurrentEyeMatrix.multiply(mTmpMatrix.setAll(mTmpOrientation.fromAngleAxis(Vector3.Y, mGestureYAngle)));
+
+
         mCurrentEyeOrientation.fromMatrix(mCurrentEyeMatrix);
         getCurrentCamera().setOrientation(mCurrentEyeOrientation);
         getCurrentCamera().setPosition(mCameraPosition);
@@ -136,5 +153,34 @@ public class RajawaliVRRenderer extends RajawaliRenderer implements CardboardVie
         mHeadTranslation.normalize();
 
         return mHeadTranslation.angle(mForwardVec) < maxAngle;
+    }
+
+    public void addGestureRotateAngle(float rotateXAngle, float rotateYAngle){
+        mGestureXAngle += rotateXAngle;
+        mGestureYAngle += rotateYAngle;
+
+        if(mGestureXAngle >= 360){
+            mGestureXAngle -= 360;
+        }
+
+        else if(mGestureXAngle <= -360){
+            mGestureXAngle += 360;
+        }
+
+        if(mGestureYAngle >= 360){
+            mGestureYAngle -= 360;
+        }
+        else if(mGestureYAngle <= -360){
+            mGestureYAngle += 360;
+        }
+    }
+
+    public void resetGestureAngle(){
+        mGestureXAngle = 0;
+        mGestureYAngle = 0;
+    }
+
+    public Matrix4 getHeadViewMatrix() {
+        return mHeadViewMatrix;
     }
 }

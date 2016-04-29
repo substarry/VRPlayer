@@ -30,33 +30,40 @@ import org.rajawali3d.vr.surface.RajawaliVRSurfaceView;
  * @author dennis.ippel
  */
 public class RajawaliVRActivity extends CardboardActivity {
-    private CardboardView mSurfaceView;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-        mSurfaceView = new CardboardView(this);
+		CardboardView cardboardView = new CardboardView(this);
 
-        addContentView(mSurfaceView, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT));
+        addContentView(cardboardView, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT));
 
-        mSurfaceView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+		cardboardView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 	            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 	            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 	            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
 	            | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
 	            | View.SYSTEM_UI_FLAG_IMMERSIVE);
 
-        setCardboardView(mSurfaceView);
-	}
-	
-	protected void setRenderer(RajawaliVRRenderer renderer) {
-	    mSurfaceView.setRenderer(renderer);
+        setCardboardView(cardboardView);
 	}
 
-    public CardboardView getSurfaceView() {
-        return mSurfaceView;
-    }
+	protected void setRenderer(RajawaliVRRenderer renderer) {
+		getCardboardView().setRenderer(renderer);
+	}
+
+	protected void setOnTouchListener(View.OnTouchListener listener){
+		getCardboardView().setOnTouchListener(listener);
+	}
+
+	protected void setVRModeEnabled(boolean enabled) {
+		getCardboardView().setVRModeEnabled(enabled);
+	}
+
+	protected boolean getVRMode() {
+		return getCardboardView().getVRMode();
+	}
 	
 	@Override
 	public void onResume() {

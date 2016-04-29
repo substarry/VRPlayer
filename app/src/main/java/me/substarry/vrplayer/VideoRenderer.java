@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.graphics.SurfaceTexture;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
+
+import com.samskrut.vrplayer.R;
 
 import org.rajawali3d.materials.Material;
 import org.rajawali3d.materials.textures.ATexture;
@@ -22,6 +25,7 @@ public class VideoRenderer extends RajawaliVRRenderer {
     String videopath;
     private MediaPlayer mMediaPlayer;
     private StreamingTexture mVideoTexture;
+    private Sphere mSphere;
 
     public VideoRenderer(Activity activity, String _path) {
         super(activity.getApplicationContext());
@@ -33,13 +37,17 @@ public class VideoRenderer extends RajawaliVRRenderer {
     @Override
     public void initScene() {
 
-        //mMediaPlayer = MediaPlayer.create(getContext(),
-        //       R.raw.video);
-        File file = new File(videopath);
-        Uri uri = Uri.fromFile(file);
-        Log.d("bis", "uri= " + uri.toString());
-        mMediaPlayer = MediaPlayer.create(getContext(), uri);
 
+        if(TextUtils.isEmpty(videopath)){
+            mMediaPlayer = MediaPlayer.create(getContext(), R.raw.demo);
+        }
+        else{
+            File file = new File(videopath);
+            Uri uri = Uri.fromFile(file);
+            Log.d("bis", "uri= " + uri.toString());
+            mMediaPlayer = MediaPlayer.create(getContext(), uri);
+
+        }
         mMediaPlayer.setLooping(true);
 
         mVideoTexture = new StreamingTexture("sintelTrailer", mMediaPlayer);
@@ -51,11 +59,11 @@ public class VideoRenderer extends RajawaliVRRenderer {
             e.printStackTrace();
         }
 
-        Sphere sphere = new Sphere(50, 64, 32);
-        sphere.setScaleX(-1);
-        sphere.setMaterial(material);
+        mSphere = new Sphere(50, 64, 32);
+        mSphere.setScaleX(-1);
+        mSphere.setMaterial(material);
 
-        getCurrentScene().addChild(sphere);
+        getCurrentScene().addChild(mSphere);
 
         getCurrentCamera().setPosition(Vector3.ZERO);
 
@@ -81,6 +89,15 @@ public class VideoRenderer extends RajawaliVRRenderer {
         });
 
     }
+
+    @Override
+    public void addGestureRotateAngle(float rotateXAngle, float rotateYAngle){
+
+        super.addGestureRotateAngle(rotateXAngle, rotateYAngle);
+//        mGestureYAngle = 0;
+//        mSphere.rotate(Vector3.Y, rotateYAngle);
+    }
+
 
     @Override
     public void onRender(long ellapsedRealtime, double deltaTime) {

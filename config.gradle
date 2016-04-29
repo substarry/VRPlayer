@@ -1,0 +1,21 @@
+
+// Build
+ext.set('targetSdk', 23)
+ext.set('compileSdk', 23)
+ext.set('minSdk', 16)
+ext.set('buildTools', '23.0.2')
+ext.set('versionCode', 1)
+ext.set('versionName', '1.0')
+ext.set('applicationId', 'me.substarry.vrplayer')
+
+// Support
+ext.set('depAndroidSupport', 'com.android.support:support-v13:23.2.0')
+ext.set('depAppCompat', 'com.android.support:appcompat-v7:23.2.0')
+ext.set('depSupportAnnotations', 'com.android.support:support-annotations:23.2.0')
+ext.set('depRecycler', 'com.android.support:recyclerview-v7:23.2.0')
+ext.set('depDesign', 'com.android.support:design:23.2.0')
+ext.set('depCardview', 'com.android.support:cardview-v7:23.2.0')
+
+
+// Examples dependencies
+ext.set('depRajawali', 'org.rajawali3d:rajawali:1.0.325@aar')

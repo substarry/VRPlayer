@@ -2,6 +2,7 @@ package me.substarry.vrplayer;
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
@@ -14,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.samskrut.vrplayer.R;
@@ -40,7 +42,7 @@ public class ListActivity extends AppCompatActivity {
 
         File file = new File(Environment.getExternalStorageDirectory() + File.separator + "360Videos");
 
-        if(files_count_old==0||files_count_old!=file.listFiles().length){
+        if(file.listFiles() != null && (files_count_old==0||files_count_old!=file.listFiles().length)){
 
             files_count_old=file.listFiles().length;
 
@@ -75,6 +77,16 @@ public class ListActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setTitle("");
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+
+        findViewById(R.id.tv_play_demo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ListActivity.this, MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                ListActivity.this.startActivity(i);
+            }
+        });
+
     }
 
 
